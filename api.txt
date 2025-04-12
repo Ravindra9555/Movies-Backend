@@ -1,0 +1,49 @@
+✅ Admin (User) APIs
+Method	Endpoint	Description	Body Params (JSON)
+POST	/api/auth/register	Register new admin	{ "username": "admin", "email": "admin@example.com", "password": "123456" }
+POST	/api/auth/login	Login existing admin	{ "email": "admin@example.com", "password": "123456" }
+✅ Category APIs
+Method	Endpoint	Description	Body Params (JSON)
+POST	/api/categories	Create a category	{ "name": "Action", "slug": "action" }
+GET	/api/categories	Get all categories	-
+GET	/api/categories/:id	Get category by ID	-
+PUT	/api/categories/:id	Update category	{ "name": "Action Updated", "slug": "action-updated" }
+DELETE	/api/categories/:id	Delete category	-
+✅ Language APIs
+Method	Endpoint	Description	Body Params (JSON)
+POST	/api/languages	Create a language	{ "name": "English", "slug": "english", "code": "en" }
+GET	/api/languages	Get all languages	-
+GET	/api/languages/:id	Get language by ID	-
+PUT	/api/languages/:id	Update language	{ "name": "Hindi", "slug": "hindi", "code": "hi" }
+DELETE	/api/languages/:id	Delete language	-
+✅ Movie APIs
+Method	Endpoint	Description	Body Params (JSON)
+POST	/api/movies	Create movie	See below ↓
+GET	/api/movies	Get all movies	-
+GET	/api/movies/:id	Get movie by ID	-
+PUT	/api/movies/:id	Update movie	Same as Create
+DELETE	/api/movies/:id	Delete movie	-
+🎬 Movie POST/PUT Body Example:
+json
+Copy
+Edit
+{
+  "title": "The Dark Knight",
+  "slug": "the-dark-knight",
+  "description": "A movie about Batman fighting the Joker.",
+  "categoryId": "category_object_id_here",
+  "languageId": "language_object_id_here",
+  "year": 2008,
+  "qualities": ["720p", "1080p"],
+  "tags": ["action", "thriller"],
+  "thumbnailUrl": "https://your-cloudinary.com/sample-thumb.jpg",
+  "downloadLinks": [
+    {
+      "label": "Google Drive",
+      "url": "https://drive.google.com/file/d/abc123",
+      "quality": "1080p",
+      "isActive": true
+    }
+  ]
+}
+
