@@ -43,10 +43,10 @@ import Movie from "../models/movie.model.js";
       res.status(500).json({ message: err.message });
     }
   };
-  
   export const getAllMovies = async (req, res) => {
     try {
-      const { categoryId, languageId, year, search } = req.query;
+      const { categoryId, languageId, year, search, page = 1, limit = 10 } = req.query;
+  
       const filter = {};
   
       if (categoryId) filter.categoryId = categoryId;
@@ -56,16 +56,29 @@ import Movie from "../models/movie.model.js";
         filter.$text = { $search: search };
       }
   
+      const skip = (parseInt(page) - 1) * parseInt(limit);
+  
       const movies = await Movie.find(filter)
         .populate("categoryId", "name")
         .populate("languageId", "name")
-        .sort({ createdAt: -1 });
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(parseInt(limit));
   
-      res.json(movies);
+      const total = await Movie.countDocuments(filter);
+  
+      res.json({
+        data: movies,
+        total,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        totalPages: Math.ceil(total / limit)
+      });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
   };
+  
   
   export const getMovieByIdOrSlug = async (req, res) => {
     try {
